@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using System;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
-// with endpoint routing
-WebHost.CreateDefaultBuilder().Configure(app => 
-{
-    app.UseRouting();
-    app.UseEndpoints(e => e.MapGet("/", c => c.Response.WriteAsync("Hello world!")));
-}).Build().Run();
+// simplest variant 2
+WebHost.Start(routes => routes.MapGet("hello/{name}", (req, res, data) => res.WriteAsync($"Hello, {data.Values["name"]}")));
+Console.ReadKey();
